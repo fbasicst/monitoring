@@ -14,19 +14,25 @@ Regulatory Compliance Solution
 
 ## Introduction
 
-Provide a brief overview of your project, including its purpose and main features.
+The Compliance Management App is a comprehensive solution designed to assist businesses in adhering to regulatory standards and ensuring compliance with various business services. This application streamlines the compliance process by providing a systematic approach to creating, monitoring, and reporting on compliance plans.
 
 ## Features
 
-Highlight the key features of your project. This could include functionalities of both the backend and frontend.
+- **Plan Creation:** Easily create compliance plans outlining specific tasks and checks required for regulatory adherence.
+
+- **Task Monitoring:** Track the progress of compliance plans, ensuring that users complete the necessary tasks within specified timelines.
+
+- **Report Generation:** Generate detailed reports on completed compliance work, providing insights into the overall compliance status.
+
+- **Analytical Tools:** Utilize built-in charts and analytics to visualize compliance data and identify trends or areas that may need attention.
 
 ## Technologies Used
 
-- PHP (Backend)
-- AngularJS (Frontend)
-- MySQL (Database)
+- **Backend:** Developed in PHP to handle the core logic, data processing, and interaction with the database.
 
-Explain briefly why you chose these technologies and how they contribute to your project.
+- **Frontend:** AngularJS is employed for the user interface, offering a dynamic and responsive experience for users.
+
+- **Database:** MySQL serves as the backend database, storing and managing compliance-related data.
 
 ## Setup
 
