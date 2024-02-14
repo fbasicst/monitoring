@@ -1,0 +1,100 @@
+
+<!-- Menu -->
+<div class="nav-wrapper">
+	<ul id="nav" class="nav" data-slim-scroll data-collapse-nav>
+	
+		<!--Category name-->  
+		<li class="nav-title">Navigacija</li>
+		
+		<!--Menu list item-->
+		<li> 
+			<a ui-sref="monitoring.dashboard"> 
+				<i class="fa fa-home mr-10"></i> 
+				<span>Kontrolna ploča</span> 
+			</a> 
+		</li>
+		<li class="divider"></li>
+		
+		<li class="nav-title">Nadzor</li>
+		
+		<!--Menu item-->
+		<li>
+			<a href="javascript:void(0);">
+				<i class="fa fa-building-o mr-10"></i>
+				<span>Objekti</span>
+			</a>
+			<!--Submenu-->
+			<ul>
+				<li>
+					<a ui-sref="monitoring.objectEntry">
+					<i class="fa fa-caret-right mr-10"></i>
+					<span>Unos objekta</span>
+					</a>
+				</li>			
+				<li>
+					<a ui-sref="monitoring.objectList">
+					<i class="fa fa-caret-right mr-10"></i>
+					<span>Popis objekata</span>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="monitoring.archivedObjectList">
+						<i class="fa fa-caret-right mr-10"></i>
+						<span>Arhivirani objekti</span>
+					</a>
+				</li>
+				
+			</ul>
+		</li>
+		<li class="divider"></li>
+		
+		<li>
+			<a href="javascript:void(0);">
+				<i class="fa fa-paper-plane mr-10"></i>
+				<span>Plan</span>
+			</a>
+			<ul>
+				<li>
+					<a ui-sref="monitoring.plansWeekly">
+					<i class="fa fa-caret-right mr-10"></i>
+					<span>Tjedni</span>
+					</a>
+				</li>				
+			</ul>
+			<ul>
+				<li>
+					<a ui-sref="monitoring.plansMonthly">
+						<i class="fa fa-caret-right mr-10"></i>
+						<span>Mjesečni</span>
+					</a>
+				</li>
+			</ul>
+			<ul>
+				<li>
+					<a ui-sref="monitoring.plansAnnually">
+						<i class="fa fa-caret-right mr-10"></i>
+						<span>Godišnji</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class="divider"></li>
+
+		<li>
+			<a href="javascript:void(0);">
+				<i class="fa fa-file-text-o mr-10"></i>
+				<span>Izvještaji</span>
+			</a>
+			<ul>
+				<li>
+					<a ui-sref="monitoring.reportServiceItems">
+						<i class="fa fa-caret-right mr-10"></i>
+						<span>Odrađeni nadzor</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class="divider"></li>
+	
+	</ul>
+</div>

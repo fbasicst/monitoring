@@ -1,0 +1,175 @@
+<h3>Uređivanje podataka o objektu</h3>
+<div class="divider"></div>
+<hr>
+<form class="form-horizontal" name="objectEditForm" novalidate>
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Komitent</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" ng-disabled="true" ng-model="objectEditData.CustomerName">
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Ugovor</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select ng-model="objectEditData.ContractBarcode" theme="bootstrap">
+                <ui-select-match allow-clear="true" placeholder="Izbor ugovora">{{$select.selected.Barcode}}</ui-select-match>
+                <ui-select-choices repeat="item.Barcode as item in contracts | filter: $select.search">
+                    <div ng-bind-html="item.Barcode | highlight: $select.search"></div>
+                    <small ng-bind-html="item.StartDate | dateTimeFormat"></small> -
+                    <small ng-bind-html="item.EndDate | dateTimeFormat"></small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-sm-1">
+            <button class="btn btn-sm waves-indigo pull-right" ng-disabled="objectEditData.ContractBarcode == null" ng-click="showPDF()">
+                <span class="text-small">PDF</span>
+            </button>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Naziv objekta</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Naziv" maxlength="50" ng-model="objectEditData.ObjectName" required>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Vrsta objekta</label>
+        </div>
+        <div class="col-sm-6">
+            <ui-select ng-model="objectEditData.ObjectTypeId" theme="bootstrap" required>
+                <ui-select-match allow-clear="true" placeholder="Vrsta">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="item.Id as item in objectTypes | filter: $select.search">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Područje objekta</label>
+        </div>
+        <div class="col-sm-6">
+            <ui-select ng-model="objectEditData.ObjectAreaId" theme="bootstrap" required>
+                <ui-select-match allow-clear="true" placeholder="Područje">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="item.Id as item in areas | filter: $select.search">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Ulica</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Unos ulice" maxlength="50" ng-model="objectEditData.ObjectStreetName" required>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Broj</label>
+        </div>
+        <div class="col-sm-2">
+            <input class="form-control" placeholder="bb" integermask maxlength="5" ng-model="objectEditData.ObjectStreetNumber">
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Grad</label>
+        </div>
+        <div class="col-sm-6">
+            <ui-select ng-model="objectEditData.ObjectCityId" theme="bootstrap" required>
+                <ui-select-match placeholder="Unos grada">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="item.Id as item in cities | filter: { Name: $select.search }">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                    <small ng-bind-html="item.PostalCode + ' ' + item.Post"></small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Kontakt osoba</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Kontakt" maxlength="50" ng-model="objectEditData.ContactPersonName">
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Kontakt telefon</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Telefon" maxlength="20" phonemask ng-model="objectEditData.ContactPersonPhone">
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Kontakt mail</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" placeholder="Mail" maxlength="50" emailmask ng-model="objectEditData.ContactPersonMail">
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Bilješke</label>
+        </div>
+        <div class="col-sm-6">
+            <textarea id="notes" class="form-control" rows="4" maxlength="500" ng-model="objectEditData.Notes"></textarea>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Objekt aktivan</label>
+        </div>
+        <div class="col-sm-2">
+            <ui-select ng-model="objectEditData.IsActive" theme="bootstrap" required>
+                <ui-select-match placeholder="Aktivan">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="item.value as item in yesNoSelectOptions | filter: $select.search">
+                    <div ng-bind-html="item.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="divider"></div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3 col-sm-offset-9">
+            <button class="btn waves-effect waves-button waves-float waves-primary pull-right" ng-disabled="objectEditForm.$invalid" ng-click="updateObjectGeneralInfo()">Spremi</button>
+        </div>
+    </div>
+</form>

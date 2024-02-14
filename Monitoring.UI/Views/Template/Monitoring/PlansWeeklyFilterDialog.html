@@ -1,0 +1,55 @@
+<h3>Filtriranje rezultata</h3>
+<div class="divider"></div>
+<hr>
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Mjesec</label>
+        </div>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="Mjesec" maxlength="2" integermask ng-model="filter.month" >
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Godina</label>
+        </div>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="Godina" maxlength="4" integermask ng-model="filter.year" >
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Korisnik plana</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select ng-model="filter.planUser" theme="bootstrap">
+                <ui-select-match allow-clear="true" placeholder="Korisnik">{{$select.selected.FirstName + ' ' + $select.selected.LastName}}</ui-select-match>
+                <ui-select-choices repeat="item in planUsersList | filter: $select.search">
+                    <div ng-bind-html="item.FirstName + ' ' + item.LastName | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Broj objekata</label>
+        </div>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="Više od" maxlength="2" integermask ng-model="filter.objectsAmount" >
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <button class="btn waves-effect waves-button waves-float waves-indigo pull-right" ng-click="searchWeeklyPlans()">Filtriraj</button>
+        </div>
+    </div>
+</div>

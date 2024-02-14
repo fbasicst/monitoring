@@ -1,0 +1,80 @@
+<h3>Kreiranje novog plana</h3>
+<div class="divider"></div>
+<hr>
+<form class="form-horizontal" name="userForm" novalidate>
+	<div class="row">
+		<div class="col-sm-4">
+			<label class="control-label">Datum početka</label>
+		</div>
+		<div class="col-sm-5">
+			<div class="input-group" datepicker data-el="#creationDate" data-var-name="filter.creationDate">
+				<input class="form-control filter-date" type="text" id="creationDate" ng-model="plan.creationDate" datemask required ng-change="setMaxDate(plan.creationDate)">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			</div>
+		</div>
+	</div>
+	<div class="divider"></div>
+	<div class="row">
+		<div class="col-sm-4">
+			<label class="control-label">Datum isteka</label>
+		</div>
+		<div class="col-sm-5">
+			<div class="input-group" datepicker data-el="#expirationDate" data-var-name="filter.expirationDate"  max-date="{{ maxDate }}">
+				<input class="form-control filter-date" type="text" id="expirationDate" ng-model="plan.expirationDate" datemask required>
+				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			</div>
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-4">
+			<label class="control-label">Izvršitelji plana</label>
+		</div>
+		<div class="col-sm-5">
+			<ui-select multiple ng-model="plan.attachedUsers" theme="bootstrap" close-on-select="true">
+				<ui-select-match placeholder="Korisnik/ci">{{$item.FirstName + ' ' + $item.LastName}}</ui-select-match>
+				<ui-select-choices repeat="item in planUsersList | filter: $select.search">
+					<div ng-bind-html="item.FirstName + ' ' + item.LastName | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-4">
+			<label class="control-label">Oznaka (akreditacija)</label>
+		</div>
+		<div class="col-sm-5">
+			<input class="form-control" type="text" ng-model="plan.label" maxlength="20" required>
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-4">
+			<label class="control-label">Plan izradio</label>
+		</div>
+		<div class="col-sm-5">
+			{{ plan.userCreated.firstName + ' ' + plan.userCreated.lastName }}
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-4">
+			<label class="control-label">Plan kontrolira</label>
+		</div>
+		<div class="col-sm-5">
+			{{ plan.userControlled.FirstName + ' ' + plan.userControlled.LastName }}
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-2 col-sm-offset-10">
+			<button class="btn waves-effect waves-button waves-float waves-primary pull-right" ng-disabled="userForm.$invalid || checkDates(plan.creationDate, plan.expirationDate) || plan.attachedUsers == null || plan.attachedUsers.length == 0" ng-click="savePlanWeekly()">Spremi</button>
+		</div>
+	</div>
+</form>

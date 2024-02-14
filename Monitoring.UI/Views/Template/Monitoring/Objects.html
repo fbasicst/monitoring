@@ -1,0 +1,14 @@
+<div class="pageheader">
+	<h3><i class="fa fa-pencil"></i>Objekti</h3>
+	<!-- ovdje još ide "Vi ste ovdje" -->
+</div>
+
+<div class="page" ng-controller="objectsController">
+    <section class="panel panel-default" ng-init="initWaves()">
+      <h4 class="nm pad-15"> Popis <strong> objekata </strong> </h4>
+	  <hr>
+        <div class="panel-body">
+			<datatables-lazy class="table" columns="objectsColumns" options="objectsOptions"></datatables-lazy>		
+		</div>
+	</section>
+</div>

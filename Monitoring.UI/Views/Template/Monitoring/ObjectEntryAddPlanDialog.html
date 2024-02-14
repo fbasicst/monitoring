@@ -1,0 +1,153 @@
+<h3>Novi plan nadzora (2/2)</h3>
+<div class="divider"></div>
+<hr>
+<div class="form-horizontal">
+	<form name="addPlanForm">
+	<div class="row">
+		<div class="col-sm-3">
+			<label for="season" class="control-label">Razina plana nadzora</label>
+		</div>
+		<div class="col-sm-3">
+			<ui-select ng-model="plan.planLevel" theme="bootstrap">
+				<ui-select-match placeholder="Razina">{{$select.selected.name}}</ui-select-match>
+				<ui-select-choices repeat="item in planLevels | filter: $select.search">
+					<div ng-bind-html="item.name | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row" ng-show="plan.planLevel.enumdescription == 'MONTHLY'">
+		<div class="col-sm-3">
+			<label for="season" class="control-label">Raspored plana nadzora</label>
+		</div>
+		<div class="col-sm-3">
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[0].Value">
+			<span>Siječanj</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[1].Value" >
+			<span>Veljača</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[2].Value">
+			<span>Ožujak</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[3].Value">
+			<span>Travanj</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[4].Value">
+			<span>Svibanj</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[5].Value">
+			<span>Lipanj</span></label>	
+		</div>
+		<div class="col-sm-3">
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[6].Value">
+			<span>Srpanj</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[7].Value">
+			<span>Kolovoz</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[8].Value">
+			<span>Rujan</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[9].Value">
+			<span>Listopad</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[10].Value">
+			<span>Studeni</span></label>
+			<label class="ui-checkbox">
+			<input name="checkbox1" type="checkbox" ng-model="plan.month[11].Value">
+			<span>Prosinac</span></label>
+		</div>
+	</div>
+	<div class="divider"></div>
+
+	<!-- Fiksni datumi -->
+	<!-- CANCELED <div class="row" ng-show="plan.planLevel.enumdescription == 'FIXED_DATES'">
+		<div class="col-sm-3">
+			<label class="control-label">Datum obrade objekta</label>
+		</div>
+		<div class="col-sm-3">
+			<div class="input-group" datepicker data-el="#scheduleDate" data-var-name="filter.scheduleDate">
+				<input class="form-control filter-date" type="text" id="scheduleDate" ng-model="plan.scheduleFixDate" datemask required>
+				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			</div>
+		</div>
+		<div class="col-sm-1">
+			<button class="btn btn-xs waves-effect waves-button waves-float waves-indigo" ng-click="addToScheduleDatesList()">Dodaj datum</button>
+		</div>
+	</div>
+	<div class="divider"></div>
+
+	<div ng-repeat="date in plan.fixedDates" ng-show="plan.planLevel.enumdescription == 'FIXED_DATES'">
+		<div class="row">
+			<div class="col-sm-offset-3 col-sm-2">
+				{{ date }}
+			</div>
+			<div class="col-sm-1">
+				<button type="button" class="btn btn-default btn-xs" ng-click="removeFromScheduleDatesList($index)">
+					<i class="fa fa-close"></i>
+				</button>
+			</div>
+		</div>
+		<div class="divider"></div>
+	</div>-->
+
+	<div class="row">
+		<div class="col-sm-3">
+			<label for="season" class="control-label">Mjesečno ponavljanje plana</label>
+		</div>
+		<div class="col-sm-1">
+			<ui-select ng-model="plan.monthlyRepeats" theme="bootstrap">
+				<ui-select-match >{{$select.selected}}</ui-select-match>
+				<ui-select-choices repeat="item in monthlyRepeats | filter: $select.search">
+					<div ng-bind-html="item | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>
+
+	<div class="row">
+		<div class="col-sm-3">
+			<label for="season" class="control-label">Plan vrijedi do daljnjega</label>
+		</div>
+		<div class="col-sm-1">
+			<ui-select ng-model="plan.validFurther" theme="bootstrap">
+				<ui-select-match >{{$select.selected.name}}</ui-select-match>
+				<ui-select-choices repeat="item in yesNoSelectOptions | filter: $select.search">
+					<div ng-bind-html="item.name | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>
+
+	<div class="row" ng-show="plan.validFurther.value == false">
+		<div class="col-sm-3">
+			<label for="season" class="control-label">Datum isteka plana</label>
+		</div>
+		<div class="col-sm-3">
+			<div class="input-group" datepicker data-el="#endDate" data-var-name="plan.endDateFormatted">
+				<input class="form-control filter-date" type="text" id="endDate" ng-model="plan.endDate" datemask ng-required="plan.validFurther.value == false">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			</div>
+		</div>
+	</div>
+	<div class="divider"></div>
+
+	<div class="row">
+		<div class="col-sm-1 col-sm-offset-10">
+			<button class="btn waves-effect waves-button waves-float waves-warning pull-right" ng-click="backToMonitoring(index)">Natrag</button>			
+		</div>
+		<div class="col-sm-1">
+			<button class="btn waves-effect waves-button waves-float waves-primary pull-right" 
+			ng-disabled="checkValidPlanDialog() || addPlanForm.$invalid"
+			ng-click="savePlan(index)">Spremi</button>
+		</div>
+	</div>
+	</form>
+</div>

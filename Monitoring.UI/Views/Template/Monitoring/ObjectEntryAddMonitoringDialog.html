@@ -1,0 +1,76 @@
+<h3>Novi plan nadzora (1/2)</h3>
+<div class="divider"></div>
+<hr>
+<div class="form-horizontal">
+	<div class="row">
+		<div class="col-sm-3">
+			<label class="control-label">Vrsta usluge</label>
+		</div>
+		<div class="col-sm-4">
+			<ui-select ng-model="plan.contractServiceType" theme="bootstrap">
+				<ui-select-match placeholder="Usluga">{{$select.selected.Name}}</ui-select-match>
+				<ui-select-choices repeat="item in contractServiceTypes | filter: $select.search">
+					<div ng-bind-html="item.Name | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-3">
+			<label class="control-label">Vrsta nadzora</label>
+		</div>
+		<div class="col-sm-4">
+			<ui-select ng-model="plan.serviceItem" theme="bootstrap">
+				<ui-select-match placeholder="Nadzor">{{$select.selected.ServiceName + ' - ' + $select.selected.ServiceItemName}}</ui-select-match>
+				<ui-select-choices repeat="item in serviceItems | filter: $select.search">
+					<div ng-bind-html="item.ServiceItemName | highlight: $select.search"></div>
+					<small ng-bind-html="item.ServiceName | highlight: $select.search"></small>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-3">
+			<label class="control-label">Analiza</label>
+		</div>
+		<div class="col-sm-4">		
+			<ui-select multiple ng-model="plan.analysis" theme="bootstrap" close-on-select="true">
+				<ui-select-match placeholder="Analiza">{{$item.Name}}</ui-select-match>
+				<ui-select-choices repeat="item in analysisList | filter: $select.search">
+					<div ng-bind-html="item.Name | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-3">
+			<label class="control-label">Broj uzoraka/briseva</label>
+		</div>
+		<div class="col-sm-1">
+			<input type="text" class="form-control" integermask maxlength="2" placeholder="Broj" ng-model="plan.quantity">	
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-3">
+			<label class="control-label">Opis</label>
+		</div>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" placeholder="Opis" maxlength="50" ng-model="plan.description">
+		</div>
+	</div>
+	<div class="divider"></div>
+
+	<div class="row">
+		<div class="col-sm-2 col-sm-offset-10">
+			<button class="btn waves-effect waves-button waves-float waves-primary pull-right" ng-disabled="!plan.contractServiceType || !plan.serviceItem || !plan.quantity" ng-click="saveMonitoring(index)">Spremi</button>
+		</div>
+	</div>
+</div>

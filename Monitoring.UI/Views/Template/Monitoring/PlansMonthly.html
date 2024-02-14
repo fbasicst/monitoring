@@ -1,0 +1,40 @@
+<div class="pageheader">
+    <h3><i class="fa fa-paper-plane"></i>Plan</h3>
+    <!-- ovdje još ide "Vi ste ovdje" -->
+</div>
+
+<div class="page" ng-controller="plansMonthlyController">
+    <section class="panel panel-default" ng-init="initWaves()">
+        <h4 class="nm pad-15">Popis <strong>planova </strong>objekata u mjesecu</h4>
+        <hr>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <button class="btn waves-effect waves-button waves-float waves-indigo" ng-click="setFilter()">
+                        <i class="fa fa-filter"></i>
+                        <span class="text-small">Filtri</span>
+                    </button>
+                    <button class="btn waves-effect waves-button waves-float waves-indigo" ng-click="getPlanMonthlyPdf()" ng-disabled="chosenFilters.area.length == 0">
+                        <i class="fa fa-print"></i>
+                        <span class="text-small">PDF</span>
+                    </button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="row">
+                <div class="col-sm-2" ng-show="chosenFilters.month && chosenFilters.month != ''">
+                    Mjesec: <strong>{{ chosenFilters.month }}</strong>
+                </div>
+                <div class="col-sm-2" ng-show="chosenFilters.year && chosenFilters.year != ''">
+                    Godina: <strong>{{ chosenFilters.year }}</strong>
+                </div>
+                <span class="col-sm-4">
+                    Područje objekta: <span ng-repeat="area in chosenFilters.area"><strong>{{ area.Name }}, </strong></span>
+                </span>
+            </div>
+            <div class="divider"></div>
+            <hr>
+            <datatables-lazy class="table" columns="planColumns" options="planOptions"></datatables-lazy>
+        </div>
+    </section>
+</div>

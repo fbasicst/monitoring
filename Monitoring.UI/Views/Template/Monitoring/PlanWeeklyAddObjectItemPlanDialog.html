@@ -1,0 +1,36 @@
+<h3>Dodavanje objekta u tjedni plan</h3>
+<div class="divider"></div>
+<h4>{{ planInfo.StartDate + ' - ' + planInfo.EndDate }} - <strong>{{ planInfo.PlanUser }}</strong></h4>
+<div class="divider"></div>
+<hr>
+<form class="form-horizontal" role="form" name="addToPlanForm" novalidate>
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Datum obrade objekta</label>
+        </div>
+        <div class="col-sm-5">
+            <div class="input-group" datepicker data-el="#scheduleDate" data-var-name="transferData.scheduleDateFormatted" min-date="{{ planInfo.StartDate }}" max-date="{{ planInfo.EndDate }}">
+                <input class="form-control filter-date" type="text" id="scheduleDate" ng-model="transferData.scheduleDate" datemask required>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="control-label">Bilješke</label>
+        </div>
+        <div class="col-sm-8">
+            <textarea id="notes" class="form-control" rows="4" maxlength="500" ng-model="transferData.notes"></textarea>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <button class="btn waves-effect waves-button waves-float waves-primary pull-right" ng-disabled="addToPlanForm.$invalid" ng-click="saveObjectToPlan()">Dodaj u plan</button>
+        </div>
+    </div>
+</form>

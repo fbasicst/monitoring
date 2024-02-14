@@ -1,0 +1,248 @@
+<h3>Detalji o objektu</h3>
+<div class="divider"></div>
+<hr>
+<div class="form-horizontal text-small">
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Komitent</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.CustomerName }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">OIB</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.CustomerOib }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Adresa komitenta</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.CustomerFullAddress }}
+        </div>
+    </div>
+    <div class="divider"></div>
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Objekt</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.ObjectName }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Adresa objekta</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.ObjectFullAddress }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Područje objekta</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.ObjectAreaName }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Vrsta objekta</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.ObjectTypeName }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Kontakt osoba</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.ContactPersonName }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Broj telefona</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.ContactPersonPhone }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">E-mail</label>
+        </div>
+        <div class="col-sm-4">
+            {{ objectFull.GeneralInfo.ContactPersonMail }}
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <hr>
+    <div ng-repeat="department in objectFull.Departments">
+        <div class="row">
+            <div class="col-sm-3">
+                <label class="control-label">Odjel/sektor</label>
+            </div>
+            <div class="col-sm-4">
+                {{ department.Name }}
+            </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <label class="control-label">Samo sezonski rad</label>
+            </div>
+            <div class="col-sm-4">
+                {{ department.Seasonal | boolFilter }}
+            </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <label class="control-label">Opis lokacije odjela/sektora</label>
+            </div>
+            <div class="col-sm-4">
+                {{ department.LocationDescription }}
+            </div>
+        </div>
+        <div class="divider"></div>
+
+        <div ng-show="monitoring.IsActive == true" ng-repeat="monitoring in department.Monitorings">
+
+            <div class="row">
+                <div class="col-sm-1">
+                    <label class="control-label">{{ $index + 1 }}.</label>
+                </div>
+
+                <div class="col-sm-3">
+                    <label class="control-label">Vrsta nadzora</label>
+                </div>
+                <div class="col-sm-4">
+                    {{ monitoring.ServiceTypeName }}
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-1">
+                    <label class="control-label">Vrsta nadzora</label>
+                </div>
+                <div class="col-sm-4">
+                    {{ monitoring.ServiceName + ' - ' + monitoring.ServiceItemName }}
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-1">
+                    <label class="control-label">Analiza</label>
+                </div>
+                <div class="col-sm-4">
+                    <div ng-repeat="analysis in monitoring.Analysis">
+                        {{ analysis.Name }}
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-1">
+                    <label class="control-label">Broj uzoraka/briseva</label>
+                </div>
+                <div class="col-sm-4">
+                    {{ monitoring.Quantity }}
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-1">
+                    <label class="control-label">Opis nadzora</label>
+                </div>
+                <div class="col-sm-4">
+                    {{ monitoring.Description }}
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-1">
+                    <label class="control-label">Raspored nadzora</label>
+                </div>
+                <div class="col-sm-4">
+                    <div ng-show="monitoring.ScheduleLevelEnum == 'MONTHLY'" ng-repeat="plan in monitoring.ScheduleDates">
+                        {{ plan.Month | monthName}}
+                    </div>
+                    <div ng-show="monitoring.ScheduleLevelEnum == 'FIXED_DATES'" ng-repeat="plan in monitoring.ScheduleDates">
+                        {{ plan.Date | dateTimeFormat }}
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-1">
+                    <label class="control-label">Broj mjesečnih ponavljanja</label>
+                </div>
+                <div class="col-sm-4">
+                    {{ monitoring.MonthlyRepeats }}
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-1">
+                    <label class="control-label">Plan vrijedi do daljnjega</label>
+                </div>
+                <div class="col-sm-4">
+                    {{ monitoring.ValidFurther | boolFilter }}
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <div class="row" ng-show="monitoring.EndDate != null">
+                <div class="col-sm-3 col-sm-offset-1">
+                    <label class="control-label">Datum isteka</label>
+                </div>
+                <div class="col-sm-4">
+                    {{ monitoring.EndDate | dateTimeFormat }}
+                </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="divider"></div>
+            <div class="divider"></div>
+        </div>
+        <hr>
+        <div class="divider"></div>
+    </div>
+    <hr>
+</div>

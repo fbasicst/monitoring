@@ -1,0 +1,126 @@
+<div class="pageheader">
+	<h3><i class="fa fa-paper-plane"></i>Plan</h3>
+	<!-- ovdje još ide "Vi ste ovdje" -->
+</div>
+
+<div class="page" ng-controller="planWeeklyEditController">
+    <section class="panel panel-default" ng-init="initWaves()">
+	<h4 class="nm pad-15">Tjedni <strong>plan</strong>: {{ planInfo.StartDate + ' - ' + planInfo.EndDate }} - <strong>{{ planInfo.PlanUser }}</strong></h4>
+	 <hr>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-4">
+					<button class="btn btn-sm waves-effect waves-button waves-float waves-grey" ng-show="planInfo.IsLocked == true">
+						<span class="glyphicon glyphicon-lock"></span>
+						<span class="text-small"> Plan zaključan</span>
+					</button>
+					<button class="btn btn-sm waves-effect waves-button waves-float waves-danger" ng-show="planInfo.IsLocked == false && planInfo.ObjectsAmount != 0 && planInfo.ObjectsPending == 0" ng-click="lockPlan()">
+						<span class="glyphicon glyphicon-lock"></span>
+						<span class="text-small"> Zaključaj plan</span>
+					</button>
+					<button class="btn btn-sm waves-effect waves-button waves-float waves-indigo" ng-disabled="planInfo.ObjectsAmount == 0" ng-click="printPlanWeeklyPdf()">
+						<span class="glyphicon glyphicon-print"></span>
+						<span class="text-small"> PDF</span>
+					</button>
+					<button class="btn btn-sm waves-effect waves-button waves-float waves-info" ng-show="planInfo.IsLocked == false && planInfo.IsUploaded == false && planInfo.ObjectsAmount != 0" ng-click="pushToCloud()">
+						<span class="fa fa-cloud-upload"></span>
+						<span class="text-small"> Pošalji plan</span>
+					</button>
+					<button class="btn btn-sm waves-effect waves-button waves-float waves-default" ng-show="planInfo.IsLocked == false && planInfo.IsUploaded == true" ng-click="pullCloudData()">
+						<span class="fa fa-cloud-download"></span>
+						<span class="text-small"> Dohvati plan</span>
+					</button>
+				</div>
+				<div class="col-sm-offset-6 col-sm-2">
+					<button class="btn pull-right waves-effect waves-button waves-float waves-primary" ng-show="planInfo.IsLocked == false && planInfo.ObjectsAmount != 0" ng-click="updatePlanWeeklyItemsStatuses()">
+						<i class="fa fa-flag-checkered"></i>
+						<span class="text-small"> Ažuriraj grupno</span>
+					</button>
+				</div>
+			</div>
+			<div class="divider"></div>
+
+			<div class="row">
+				<div class="col-sm-2">
+					Broj dana: {{ planInfo.DaysAmount }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					Broj objekata: {{ planInfo.ObjectsAmount }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					Oznaka plana: {{ planInfo.Label }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2">
+					Plan poslan korisniku: {{ planInfo.IsUploaded | boolFilter }}
+				</div>
+			</div>
+			<hr>
+			<div class="divider"></div>
+			<datatables-lazy class="table" columns="planColumns" options="planOptions"></datatables-lazy>
+		</div>
+	</section>
+
+	<section class="panel panel-default" ng-init="initWaves()" ng-show="planInfo.IsLocked == false">
+	<h4 class="nm pad-15">Pretraga <strong>objekata</strong></h4>
+	 <hr>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-2">
+					<button class="btn waves-effect waves-button waves-float waves-indigo" ng-click="setFilter()">
+						<i class="fa fa-filter"></i>
+						<span>Filtri</span>
+					</button>
+				</div>
+				<div class="col-sm-offset-8 col-sm-2">
+					<button class="btn waves-effect waves-button waves-float waves-primary pull-right" ng-disabled="objectIdsList.length == 0" ng-click="addGroupToPlanDialog()">
+						<i class="fa fa-upload"></i>
+						<span>Grupno dodaj</span>
+					</button>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<div class="row">
+				<div class="col-sm-2">
+					Mjesec plana: <strong>{{ planInfo.Month + '.'}}</strong>
+				</div>
+
+				<div class="col-sm-2" ng-show="chosenFilters.area">
+					Područje objekta: <strong>{{ chosenFilters.area.Name }}</strong>
+				</div>
+
+				<div class="col-sm-2" ng-show="chosenFilters.city">
+					Mjesto/Grad objekta: <strong>{{ chosenFilters.city.Name }}</strong>
+				</div>
+
+				<div class="col-sm-2" ng-show="chosenFilters.objectType">
+					Vrsta objekta: <strong>{{ chosenFilters.objectType.Name }}</strong>
+				</div>
+
+				<div class="col-sm-2" ng-show="chosenFilters.serviceItem">
+					Vrsta nadzora: <strong>{{ chosenFilters.serviceItem.ServiceName + ' ' + chosenFilters.serviceItem.ServiceItemName }}</strong>
+				</div>
+
+				<div class="col-sm-2" ng-show="chosenFilters.contractServiceType">
+					Vrsta usluge: <strong>{{ chosenFilters.contractServiceType.Name }}</strong>
+				</div>
+
+				<div class="col-sm-2" ng-show="chosenFilters.analysis">
+					Analiza: <strong>{{ chosenFilters.analysis.Name }}</strong>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<hr>
+			<div class="divider"></div>
+			<datatables-lazy class="table" columns="objectColumns" options="objectOptions"></datatables-lazy>
+		</div>
+	</section>
+	<button class="btn waves-effect waves-button waves-float waves-warning" ng-click="back()">Natrag</button>
+</div>
+
+		

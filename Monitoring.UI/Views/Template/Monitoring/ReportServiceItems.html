@@ -1,0 +1,43 @@
+<div class="pageheader">
+    <h3><i class="fa fa-file-text-o"></i>Izvještaji</h3>
+    <!-- ovdje još ide "Vi ste ovdje" -->
+</div>
+
+<div class="page" ng-controller="reportServiceItemsController">
+    <section class="panel panel-default" ng-init="initWaves()">
+        <h4 class="nm pad-15"> Odrađeni <strong> nadzor </strong> </h4>
+        <hr>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <button class="btn waves-effect waves-button waves-float waves-indigo" ng-click="setFilter()">
+                        <i class="fa fa-filter"></i>
+                        <span class="text-small">Filtri</span>
+                    </button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="row">
+                <div class="col-sm-2" ng-show="chosenFilters.year && chosenFilters.year != ''">
+                    Godina: <strong>{{ chosenFilters.year }}</strong>
+                </div>
+                <div class="col-sm-2" ng-show="chosenFilters.month && chosenFilters.month != ''">
+                    Mjesec: <strong>{{ chosenFilters.month }}</strong>
+                </div>
+                <span class="col-sm-4" ng-show="chosenFilters.area.length > 0">
+                    Područje objekta: <span ng-repeat="area in chosenFilters.area"><strong>{{ area.Name }}, </strong></span>
+                </span>
+                <span class="col-sm-4" ng-show="chosenFilters.analysis.length > 0">
+                    Analiza: <span ng-repeat="analysis in chosenFilters.analysis"><strong>{{ analysis.Name }}, </strong></span>
+                </span>
+            </div>
+            <div class="divider"></div>
+            <hr>
+            <datatables-lazy class="table" columns="serviceItemsColumns" options="serviceItemsOptions"></datatables-lazy>
+            <div class="divider"></div>
+            <div class="text-info">NAPOMENA: Odrađeni nadzori podrazumijevaju vrste nadzora koji se nalaze u
+                <strong>zaključanom</strong> planu sa statusom <strong>"Završen"</strong>
+            </div>
+        </div>
+    </section>
+</div>

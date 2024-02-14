@@ -1,0 +1,37 @@
+
+<section ng-controller="logInController">
+	<div class="lock-wrapper">
+		<div class="panel lock-box">
+			<div class="center"> <img alt="" src="../../Content/images/login/user.png" class="img-circle"/> </div>
+			<h4> Hello User !</h4>
+			<p class="text-center">Please login to Access your Account</p>
+			<div class="row">
+				<form class="form-inline" role="form" name="loginForm" novalidate>
+				<div class="form-group col-md-12 col-sm-12 col-xs-12">
+					<div class="iconic-input right">
+						<label for="signupInputEmail" class="text-muted">Username</label>
+						<input ng-model="credentials.username" id="signupInputEmail1" type="text" placeholder="Enter Username" class="form-control padding-horizontal-15" required="required" />
+						<i class="fa fa-envelope"></i>
+					</div>
+					<div class="iconic-input right">
+						<label for="signupInputPassword" class="text-muted">Password</label>
+						<input ng-model="credentials.password" id="signupInputPassword" type="password" placeholder="Password" class="form-control lock-input" required="required" />
+						<i class="fa fa-lock"></i>
+					</div>
+					<!--<div class="square-blue pull-left pv-15">
+						<label class="ui-checkbox">
+						<input type="checkbox" value="option1">  DODATI REMEMBER ME FUNKCIONALNOST
+						<span> <strong> Remember Me </strong> </span>
+						</label>
+					</div>-->
+					<button ng-click="logIn()" ng-disabled="loginForm.$invalid" type="submit" class="btn btn-block btn-primary">Sign In</button>
+					<div class="divider"></div>
+					<div class="text-danger" ng-show="failedLogIn">
+						Pogrešna lozinka i/ili korisničko ime
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>

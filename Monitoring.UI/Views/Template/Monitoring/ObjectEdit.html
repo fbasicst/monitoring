@@ -1,0 +1,237 @@
+<div class="pageheader">
+	<h3><i class="fa fa-building-o"></i>Objekti</h3>
+	<!-- ovdje još ide "Vi ste ovdje" -->
+</div>
+
+<div class="page" ng-controller="objectEditController">
+    <section class="panel panel-default" ng-init="initWaves()">
+	<h4 class="nm pad-15">Detalji o <strong>objektu</strong></h4>
+	 <hr>
+		<div class="panel-body">
+			<h3>Objekt <strong>{{ objectFull.GeneralInfo.ObjectId }}</strong></h3>
+
+			<div class="row">
+				<div class="col-sm-offset-10 col-sm-2">
+					<button class="btn pull-right waves-effect waves-button waves-float waves-warning" ng-click="editGeneralInfo()">
+						<i class="fa fa-edit"></i>
+						<span class="text-small">Uredi</span>
+					</button>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Komitent</label>
+				</div>
+				<div class="col-sm-4">
+					{{ objectFull.GeneralInfo.CustomerName }}
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Ugovor</label>
+				</div>
+				<div class="col-sm-4">
+					<a href="#" ng-click="showPDF()">{{ objectFull.GeneralInfo.ContractBarcode }}</a>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Naziv</label>
+				</div>
+				<div class="col-sm-4">
+					{{ objectFull.GeneralInfo.ObjectName }}
+				</div>				
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Vrsta</label>
+				</div>
+				<div class="col-sm-4">
+					{{ objectFull.GeneralInfo.ObjectTypeName }}
+				</div>				
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Područje</label>
+				</div>
+				<div class="col-sm-4">
+					{{ objectFull.GeneralInfo.ObjectAreaName }}
+				</div>				
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Adresa</label>
+				</div>
+				<div class="col-sm-4">
+					{{ objectFull.GeneralInfo.ObjectFullAddress }}
+				</div>				
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Kontakt osoba</label>
+				</div>
+				<div class="col-sm-4">
+					{{ objectFull.GeneralInfo.ContactPersonName }}
+				</div>				
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Kontakt telefon</label>
+				</div>
+				<div class="col-sm-4">
+					{{ objectFull.GeneralInfo.ContactPersonPhone }}
+				</div>				
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Kontak mail</label>
+				</div>
+				<div class="col-sm-4">
+					<a href="mailto:{{ objectFull.GeneralInfo.ContactPersonMail }}" target="_top">{{ objectFull.GeneralInfo.ContactPersonMail }}</a>					
+				</div>				
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Bilješke</label>
+				</div>
+				<div class="col-sm-4">
+					{{ objectFull.GeneralInfo.Notes }}
+				</div>				
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="control-label">Aktivan</label>
+				</div>
+				<div class="col-sm-4">
+					<span ng-class="objectFull.GeneralInfo.IsActive == false ? 'text-red text-bold' : ''">{{ objectFull.GeneralInfo.IsActive | boolFilter }}</span>
+				</div>
+			</div>
+			<hr>
+			
+			<h3>Plan nadzora</h3>
+			<div class="divider"></div>
+			<div class="row">
+				<div class="col-sm-2">
+					<button class="btn waves-effect waves-button waves-float waves-indigo" ng-click="addDepartment()">
+					<i class="fa fa-cutlery"></i> 
+					<span>Dodaj odjel/sektor</span>
+					</button>
+				</div>									
+			</div>
+			<div class="divider"></div>
+			
+			<div ng-repeat="department in objectFull.Departments">
+				<div class="row">
+					<div class="col-sm-2">
+						<h4>{{ $index+1 + '. ' }}<strong>{{ department.Name }}</strong></h4>						
+					</div>
+				</div>
+				<button class="btn waves-effect waves-button waves-float waves-danger pull-right" ng-click="removeDepartment(department.Id)">
+					<i class="fa fa-trash"></i>
+					<span>Briši odjel</span>
+				</button>
+				
+				<div class="row">
+					<div class="col-sm-2">
+						<label class="control-label">Samo sezonski rad</label>
+					</div>
+					<div class="col-sm-2">
+						{{ department.Seasonal | boolFilter }}
+					</div>				
+				</div>
+				
+				<div class="row" ng-show="department.LocationDescription">
+					<div class="col-sm-2">
+						<label class="control-label">Opis lokacije</label>
+					</div>
+					<div class="col-sm-2">
+						{{ department.LocationDescription }}
+					</div>				
+				</div>
+
+				<div class="panel-body">
+					<table class="table table-striped" ng-show="department.Monitorings.length > 0">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Vrsta usluge</th>
+							<th>Vrsta nadzora</th>
+							<th>Analiza</th>
+							<th>Broj</th>
+							<th>Opis</th>
+							<th>Raspored nadzora</th>
+							<th>Broj mjesečnih ponavljanja</th>
+							<th>Plan vrijedi do daljnjega</th>
+							<th>Plan aktivan</th>
+							<th>Akcije</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="subitem in department.Monitorings">
+							<td>{{ $index+1 + '. ' }}</td>
+							<td>{{ subitem.ServiceTypeName }}</td>
+							<td>{{ subitem.ServiceItemName}}</td>
+							<td><div ng-repeat="analysis in subitem.Analysis">{{ analysis.Name }}</div></td>
+							<td>{{ subitem.Quantity }}</td>
+							<td>{{ subitem.Description }}</td>
+							<td ng-show="subitem.ScheduleLevelEnum=='MONTHLY'">
+								<div ng-repeat="schedule in subitem.ScheduleDates">{{ schedule.Month | monthName }}</div>
+							</td>
+							<td ng-show="subitem.ScheduleLevelEnum=='FIXED_DATES'">
+								<div ng-repeat="schedule in subitem.ScheduleDates">{{ schedule.Date | dateTimeFormat}}</div>
+							</td>
+							<td>{{ subitem.MonthlyRepeats }}</td>
+							<td>
+								{{ subitem.ValidFurther | boolFilter }}
+								<span ng-show="subitem.EndDate != null"> ({{ subitem.EndDate | dateTimeFormat}})</span>
+							</td>
+							<td>{{ subitem.IsActive | boolFilter }}</td>
+							<td>
+								<button ng-show="subitem.IsActive == true" class="btn waves-effect waves-button waves-float waves-warning" title="Uredi plan monitoringa" ng-click="editMonitoring($parent.$index, $index)">
+									<i class="fa fa-edit"></i>
+								</button>
+								<button ng-show="subitem.IsActive == false" class="btn waves-effect waves-button waves-float waves-primary"  ng-click="updateObjectItemMonitoringStatus(subitem.Id, subitem.IsActive)" title="Aktiviraj plan">
+									<i class="fa fa-power-off"></i>
+								</button>
+								<button ng-show="subitem.IsActive == true" class="btn waves-effect waves-button waves-float waves-amber" ng-click="updateObjectItemMonitoringStatus(subitem.Id, subitem.IsActive)" title="Deaktiviraj plan">
+									<i class="fa fa-power-off"></i>
+								</button>
+								<button ng-show="!subitem.IsMonitoringCopied" class="btn waves-effect waves-button waves-float waves-danger" title="Briši plan monitoringa" ng-click="deleteMonitoring(subitem.Id)">
+									<i class="fa fa-trash"></i>
+								</button>
+							</td>
+						</tr>								
+					</tbody>
+					</table>								
+				</div>
+				<div class="row">
+					<div class="col-sm-1">
+						<button class="btn waves-effect waves-button waves-float waves-primary" ng-click="addMonitoring(department.Id)">
+							<i class="fa fa-calendar"></i> 
+							<span>Dodaj plan</span>
+						</button>
+					</div>
+				</div>	
+				<hr>
+				<div class="divider"></div>
+			</div>
+		</div>
+	</section>
+	<button class="btn waves-effect waves-button waves-float waves-warning" ng-click="back()">Natrag</button>
+</div>
+
+
+
+
+

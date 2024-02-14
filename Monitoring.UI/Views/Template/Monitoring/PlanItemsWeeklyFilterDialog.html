@@ -1,0 +1,102 @@
+<h3>Filtriranje rezultata</h3>
+<div class="divider"></div>
+<hr>
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Područje objekta</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select ng-model="filter.area" theme="bootstrap">
+                <ui-select-match allow-clear="true" placeholder="Područje">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="item in areas | filter: $select.search">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Mjesto/Grad objekta</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select ng-model="filter.city" theme="bootstrap">
+                <ui-select-match allow-clear="true" placeholder="Mjesto/Grad">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices refresh-delay="0" repeat="item in cities | filter: { Name: $select.search } | limitTo: ($select.search.length <= 2) ? 0 : 10">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                    <small ng-bind-html="item.PostalCode + ' ' + item.Post"></small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Vrsta objekta</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select ng-model="filter.objectType" theme="bootstrap">
+                <ui-select-match allow-clear="true" placeholder="Vrsta">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="item in objectTypes | filter: $select.search">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Vrsta usluge</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select ng-model="filter.contractServiceType" theme="bootstrap">
+                <ui-select-match allow-clear="true" placeholder="Usluga">{{ $select.selected.Name }}</ui-select-match>
+                <ui-select-choices repeat="item in contractServiceTypes | filter: $select.search">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Vrsta nadzora</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select ng-model="filter.serviceItem" theme="bootstrap">
+                <ui-select-match allow-clear="true" placeholder="Nadzor">{{ $select.selected.ServiceName + ' - ' + $select.selected.ServiceItemName }}</ui-select-match>
+                <ui-select-choices repeat="item in serviceItems | filter: $select.search">
+                    <div ng-bind-html="item.ServiceItemName | highlight: $select.search"></div>
+                    <small ng-bind-html="item.ServiceName | highlight: $select.search"></small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Analiza</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select ng-model="filter.analysis" theme="bootstrap">
+                <ui-select-match allow-clear="true" placeholder="Analiza">{{ $select.selected.Name }}</ui-select-match>
+                <ui-select-choices repeat="item in analysisList | filter: $select.search">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <button class="btn waves-effect waves-button waves-float waves-indigo pull-right" ng-click="searchObjectItemPlans()">Filtriraj</button>
+        </div>
+    </div>
+</div>

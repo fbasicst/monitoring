@@ -1,0 +1,62 @@
+<div class="pageheader">
+	<h3><i class="fa fa-home"></i>Kontrolna ploča</h3>
+</div>
+
+<div class="page" ng-controller="dashboardController">
+    <section ng-init="initWaves()">
+		<div class="row">  
+			<div class="col-sm-12 col-sm-12 col-md-8 col-lg-6">
+				<div class="panel panel-default">
+					<h4 class="nm pad-15">Broj unešenih <strong>objekata</strong> </h4>
+					<div class="panel-body">
+						<canvas class="chart chart-pie" 
+							chart-data="chart.data" 
+							chart-labels="chart.labels" 
+							chart-options="chart.options"
+							chart-colors="chart.colours">
+						</canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-sm-12 col-md-8 col-lg-6">
+				<div class="panel panel-default">
+					<h4 class="nm pad-15">Broj unešenih <strong>objekata</strong> po korisniku u zadnjih <strong>7 dana</strong></h4>
+					<div class="panel-body">
+						<canvas id="line" class="chart chart-line"
+								chart-data="lineChart.data"
+								chart-labels="lineChart.labels"
+								chart-series="lineChart.series"
+								chart-options="lineChart.options"
+								>
+						</canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 col-sm-12 col-md-8 col-lg-6">
+				<div class="panel panel-default">
+					<h4 class="nm pad-15">Odrađeni <strong>objekti</strong> u tekućem mjesecu po <strong>korisniku</strong> </h4>
+					<div class="panel-body">
+						<div ng-repeat="userObject in userCompletedObjects">
+							<p class="text-small pr-5 nm">
+								{{ userObject.Name + ' (' + userObject.CompletedObjects + '/' + userObject.PlannedObjects + ')' }}
+								<span class="label pull-right" ng-style="{ backgroundColor: userObject.Color }">{{ userObject.Percentage }}%</span>
+							</p>
+							<div class="progress progressbar-xs nm">
+								<div class="progress-bar progress-rounded" role="progressbar" aria-valuenow="{{ userObject.Percentage }}" aria-valuemin="0" aria-valuemax="100"
+									 ng-style="{ width: userObject.Percentage + '%', backgroundColor: userObject.Color }">
+									<span class="sr-only">{{ userObject.Percentage }}</span>
+								</div>
+							</div>
+							<div class="divider"></div>
+							<div class="divider"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+

@@ -1,0 +1,44 @@
+<div class="pageheader">
+	<h3><i class="fa fa-paper-plane"></i>Plan</h3>
+	<!-- ovdje jo� ide "Vi ste ovdje" -->
+</div>
+<div class="page" ng-controller="plansWeeklyController">
+    <section class="panel panel-default" ng-init="initWaves()">
+		<h4 class="nm pad-15">Popis <strong>tjednih </strong>planova</h4>
+		<hr>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-3">
+					<button class="btn waves-effect waves-button waves-float waves-indigo" ng-click="setFilter()">
+						<i class="fa fa-filter"></i>
+						<span>Filtri</span>
+					</button>
+					<button class="btn waves-effect waves-button waves-float waves-info" ng-click="createPlan()">
+						<i class="fa fa-plus"></i> 
+						<span>Kreiraj plan</span>
+					</button>
+				</div>									
+			</div>
+			<div class="divider"></div>
+			<div class="row">
+				<div class="col-sm-2" ng-show="chosenFilters.month && chosenFilters.month != ''">
+					Mjesec: <strong>{{ chosenFilters.month }}</strong>
+				</div>
+				<div class="col-sm-2" ng-show="chosenFilters.year && chosenFilters.year != ''">
+					Godina: <strong>{{ chosenFilters.year }}</strong>
+				</div>
+				<div class="col-sm-3" ng-show="chosenFilters.planUser">
+					Korisnik plana: <strong>{{ chosenFilters.planUser.FirstName + ' ' + chosenFilters.planUser.LastName }}</strong>
+				</div>
+				<div class="col-sm-2" ng-show="chosenFilters.objectsAmount && chosenFilters.objectsAmount != ''">
+					Broj objekata: više od <strong>{{ chosenFilters.objectsAmount }}</strong>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<hr>
+			<div class="divider"></div>
+			<datatables-lazy class="table" columns="plansColumns" options="plansOptions"></datatables-lazy>		
+		</div>
+	</section>
+</div>
+		

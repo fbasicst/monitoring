@@ -1,0 +1,56 @@
+
+<!-- Top Header -->
+<div class="top-header clearfix" ng-controller="headerController"> 
+	<!--Brand logo & name-->
+	<div class="logo bg-info">
+	   <div class="logo-title"> 
+		  <i class="fa fa-cube ph-5 mr-5 fa-lg"></i>Monitoring<strong>NZJZ</strong>
+	   </div>
+	   <div class="logo-icon"> 
+		  <i class="fa fa-cube ph-5"></i> 
+	   </div>
+	</div>
+	<!-- needs to be put after logo to make it working-->
+	<div class="menu-button" toggle-off-canvas> 
+		<a href="javascript:void(0)"> 
+			<i class="fa fa-fw fa-dedent"></i> 
+		</a>
+	</div>
+	
+	<div class="top-nav bg-info">
+		<ul class="nav-left list-unstyled">
+			<!--Navigation toogle button-->
+			<li> 
+				<a href="javascript:void(0)" class="toggle-min" id="step3" toggle-nav-collapsed-min>
+				 <i class="fa fa-bars fa-lg"></i>
+				</a> 
+			</li>
+			<!-- new top nav icons here -->
+		</ul>
+		
+		<ul class="nav-right pull-right list-unstyled">
+			<!--User Dropdown-->      
+			<li class="dropdown text-normal nav-profile" dropdown on-toggle="toggled(open)">
+				<a href="javascript:void(0)" class="dropdown-toggle" dropdown-toggle>
+					<!--<img src="../../Content/images/login/user.png" alt="" class="img-circle img40_40">-->
+					<span class="hidden-xs ph-5"> 
+					<span>{{firstName + ' ' + lastName}}</span>
+					<i class="fa fa-caret-down"></i>
+					</span> 
+				</a>
+
+				<!--User Dropdown Submenu-->
+				<ul class="dropdown-menu with-arrow pull-right animated fadeInDown">			
+					<li> 
+						<a href="#" ng-click="logOut()"> 
+							<i class="fa fa-sign-out"></i> 
+							<span>Odjava</span> 
+						</a> 
+					</li>
+				</ul>
+			</li>
+
+
+		</ul>
+	</div>
+</div>

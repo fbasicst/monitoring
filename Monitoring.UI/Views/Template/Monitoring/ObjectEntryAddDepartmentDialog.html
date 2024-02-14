@@ -1,0 +1,50 @@
+<h3>Novi odjel/sektor</h3>
+<div class="divider"></div>	
+<hr>
+<div class="form-horizontal">
+	<div class="row">
+		<div class="col-sm-4">
+			<label class="control-label">Naziv odjela/sektora</label>
+		</div>
+		<div class="col-sm-6">			
+			<ui-select ng-model="plan.department.name" theme="bootstrap">
+				<ui-select-match placeholder="Naziv odjela/sektora">{{$select.selected}}</ui-select-match>
+				<ui-select-choices repeat="item in getDepartmentNames($select.search) | filter: $select.search">
+					<div ng-bind-html="item | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>	
+
+	<div class="row">
+		<div class="col-sm-4">
+			<label for="season" class="control-label">Samo sezonski rad</label>
+		</div>
+		<div class="col-sm-2">
+			<ui-select ng-model="plan.department.seasonal" theme="bootstrap">
+				<ui-select-match placeholder="Sezona">{{$select.selected.name}}</ui-select-match>
+				<ui-select-choices repeat="item in yesNoSelectOptions | filter: $select.search">
+					<div ng-bind-html="item.name | highlight: $select.search"></div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+	<div class="divider"></div>
+	
+	<div class="row">
+		<div class="col-sm-4">
+			<label class="control-label">Opis lokacije odjela/sektora</label>
+		</div>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" placeholder="Opis lokacije" maxlength="50" ng-model="plan.department.sublocation">
+		</div>
+	</div>
+	<div class="divider"></div>	
+	
+	<div class="row">
+		<div class="col-sm-2 col-sm-offset-10">
+			<button class="btn waves-effect waves-button waves-float waves-primary pull-right" ng-disabled="!plan.department.name || !plan.department.seasonal" ng-click="saveDepartment()">Spremi</button>
+		</div>
+	</div>
+</div>

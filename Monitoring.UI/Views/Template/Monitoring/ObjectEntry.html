@@ -1,0 +1,341 @@
+<div class="pageheader">
+	<h3><i class="fa fa-pencil"></i>Objekti</h3>
+	<!-- ovdje još ide "Vi ste ovdje" -->
+</div>
+
+<div class="page" ng-controller="objectEntryController">
+    <section class="panel panel-default" ng-init="initWaves()">
+      <h4 class="nm pad-15"> Unos <strong> objekta </strong> </h4>
+	  <hr>
+        <div class="panel-body">
+			<form novalidate>
+				<div>
+					<!-- 1. tab -->
+					<div ng-switch="step">
+						<div ng-switch-when="1">
+							<h2>Pravno</h2>		
+							<div class="divider"></div>							
+							<div class="form-horizontal">	
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="customer" class="control-label">Komitent</label>
+									</div>
+									<div class="col-sm-4">								
+										<ui-select ng-model="legal.customer" theme="bootstrap" ng-change="getContracts($select.selected.RemoteId)">
+											<ui-select-match placeholder="Izbor komitenta">{{$select.selected.Name}}</ui-select-match>
+											<ui-select-choices refresh="searchCustomers($select.search)" refresh-delay="0" repeat="item in customers | filter: $select.search | limitTo: ($select.search.length <= 2) ? 0 : 10">
+												<div ng-bind-html="item.Name | highlight: $select.search"></div>
+												<small ng-bind-html="item.FullAddress | highlight: $select.search"></small>
+											</ui-select-choices>
+										</ui-select>									
+									</div>
+								</div>
+								<div class="divider"></div>
+
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="contract" class="control-label">Ugovor</label>
+									</div>
+									<div class="col-sm-3">								
+										<ui-select ng-model="legal.contract" theme="bootstrap">
+											<ui-select-match allow-clear="true" placeholder="Izbor ugovora">{{$select.selected.Barcode}}</ui-select-match>
+											<ui-select-choices repeat="item in contracts | filter: $select.search">
+												<div ng-bind-html="item.Barcode | highlight: $select.search"></div>
+												<small ng-bind-html="item.StartDate | dateTimeFormat"></small> - 
+												<small ng-bind-html="item.EndDate | dateTimeFormat"></small>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+									<div class="col-sm-1">
+										<button class="btn waves-effect waves-button waves-float waves-info" ng-click="showPDF()" ng-disabled="!legal.contract">PDF</button>
+									</div>
+								</div>
+								<div class="divider"></div>
+
+								<!-- currently delayed
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="annex" class="control-label">Aneks</label>
+									</div>
+									<div class="col-sm-3">
+									  <input type="text" class="form-control" id="annex" placeholder="ui select..." ng-model="object.legal.annexId">
+									</div>
+								</div>
+								<div class="divider"></div>-->						
+								<div class="pull-right">
+									<button class="btn waves-effect waves-button waves-float waves-info" ng-disabled="!legal.customer" ng-click="setStep(2)">Sljedeće</button>
+								</div>	
+							</div>
+						</div>
+					
+						<div ng-switch-when="2">
+							<!-- 2. tab -->
+							<h2>Opće informacije</h2>	
+							<div class="divider"></div>								
+							<div class="form-horizontal">	
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="name" class="control-label">Naziv</label>
+									</div>
+									<div class="col-sm-4">
+									  <input type="text" class="form-control" id="name" placeholder="Naziv objekta" maxlength="50" ng-model="generalInfo.name">
+									</div>
+								</div>
+								<div class="divider"></div>
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="season" class="control-label">Vrsta objekta</label>
+									</div>
+									<div class="col-sm-3">
+										<ui-select ng-model="generalInfo.objectType" theme="bootstrap">
+											<ui-select-match placeholder="Vrsta">{{$select.selected.Name}}</ui-select-match>
+											<ui-select-choices repeat="item in objectTypes | filter: $select.search">
+												<div ng-bind-html="item.Name | highlight: $select.search"></div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+								</div>
+								<div class="divider"></div>	
+								<hr>
+								<div class="divider"></div>	
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="season" class="control-label">Područje objekta</label>
+									</div>
+									<div class="col-sm-3">
+										<ui-select ng-model="generalInfo.area" theme="bootstrap">
+											<ui-select-match placeholder="Područje">{{$select.selected.Name}}</ui-select-match>
+											<ui-select-choices repeat="item in areas | filter: $select.search">
+												<div ng-bind-html="item.Name | highlight: $select.search"></div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+								</div>	
+								<div class="divider"></div>								
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="" class="control-label">Ulica</label>
+									</div>
+									<div class="col-sm-3">
+										<input class="form-control" placeholder="Unos ulice" maxlength="50" ng-model="generalInfo.streetName">
+									</div>									
+								</div>
+								<div class="divider"></div>
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="" class="control-label">Broj</label>
+									</div>
+									<div class="col-sm-1">
+										<input class="form-control" placeholder="bb" integermask maxlength="5" ng-model="generalInfo.streetNumber">
+									</div>									
+								</div>
+								<div class="divider"></div>								
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="" class="control-label">Grad</label>
+									</div>
+									<div class="col-sm-3">
+										<ui-select ng-model="generalInfo.city" theme="bootstrap">
+											<ui-select-match placeholder="Unos grada">{{$select.selected.Name}}</ui-select-match>
+											<ui-select-choices refresh-delay="0" repeat="item in cities | filter: { Name: $select.search } | limitTo: ($select.search.length <= 2) ? 0 : 10">
+												<div ng-bind-html="item.Name | highlight: $select.search"></div>
+												<small ng-bind-html="item.PostalCode + ' ' + item.Post"></small>
+											</ui-select-choices>
+										</ui-select>
+									</div>									
+								</div>
+								<div class="divider"></div>	
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="" class="control-label">Poštanski broj</label>
+									</div>
+									<div class="col-sm-3">
+										<span>{{ generalInfo.city.PostalCode }}</span>
+									</div>
+								</div>
+								<div class="divider"></div>	
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="" class="control-label">Pošta</label>
+									</div>
+									<div class="col-sm-3">
+										<span>{{ generalInfo.city.Post }}</span>
+									</div>									
+								</div>
+								<div class="divider"></div>
+							</div>
+							<div class="pull-right">
+								<button class="btn waves-effect waves-button waves-float waves-warning" ng-click="setStep(1)">Prethodno</button>
+								<button class="btn waves-effect waves-button waves-float waves-info" ng-disabled="!generalInfo.name || !generalInfo.area || !generalInfo.objectType || !generalInfo.streetName || !generalInfo.city" ng-click="setStep(3)">Sljedeće</button>
+							</div>
+						</div>
+						
+						<!-- 3. tab -->
+						<div ng-switch-when="3">					
+							<h2>Plan nadzora</h2>
+							<div class="divider"></div>								
+							<div class="form-horizontal">
+								<div class="row">
+									<div class="col-sm-2">
+										<button class="btn waves-effect waves-button waves-float waves-indigo" ng-click="addDepartment()">
+										<i class="fa fa-cutlery"></i> 
+										<span>Dodaj odjel/sektor</span>
+										</button>
+									</div>									
+								</div>
+							</div>
+							<div class="divider"></div>
+							
+							<div ng-repeat="item in plan.department">
+								<hr>
+								<h3>{{ $index+1 + '. ' + item.name }}</h3>								
+								<button class="btn waves-effect waves-button waves-float waves-danger pull-right" ng-click="removeDepartment(item)">
+									<i class="fa fa-trash"></i>
+									<span>Briši odjel</span>
+								</button>								
+								<div class="row">
+									<div class="col-sm-3">
+										<label for="" class="control-label">Samo sezonski rad</label>
+									</div>
+									<div class="col-sm-2">
+										<span>{{ item.seasonal | boolFilter }}</span>
+									</div>
+								</div>
+								<div class="divider"></div>
+								<div ng-show="item.sublocation">
+									<div class="row">
+										<div class="col-sm-3">
+											<label for="" class="control-label">Sublokacija</label>
+										</div>
+										<div class="col-sm-2">
+											<span>{{ item.sublocation }}</span>
+										</div>
+									</div>
+									<div class="divider"></div>
+								</div>
+								
+								<div class="panel-body">
+									<table class="table table-striped" ng-show="item.monitoring.length > 0">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Vrsta usluge</th>
+											<th>Vrsta nadzora</th>
+											<th>Analiza</th>
+											<th>Broj</th>
+											<th>Opis</th>
+											<th>Raspored nadzora</th>
+											<th>Broj mjesečnih ponavljanja</th>
+											<th>Plan vrijedi do daljnjega</th>
+											<th>Akcije</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="subitem in item.monitoring">
+											<td>{{ $index+1 + '. ' }}</td>
+											<td>{{ subitem.contractServiceType.Name }}</td>
+											<td>{{ subitem.serviceItem.ServiceName + ' - ' + subitem.serviceItem.ServiceItemName}}</td>
+											<td><div ng-repeat="analysis in subitem.analysis">{{ analysis.Name }}</div></td>
+											<td>{{ subitem.quantity }}</td>
+											<td>{{ subitem.description }}</td>
+											<td ng-show="subitem.level.enumdescription == 'MONTHLY'">
+												<div ng-repeat="month in subitem.months">{{ month.Name }}</div>
+											</td>
+											<td ng-show="subitem.level.enumdescription == 'FIXED_DATES'">
+												<div ng-repeat="date in subitem.fixedDates">{{ date }}</div>
+											</td>
+											<td>{{ subitem.monthlyRepeats }}</td>
+											<td>
+												{{ subitem.validFurther | boolFilter }}
+												<span ng-show="subitem.endDate != null"> ({{ subitem.endDate | dateTimeFormat}})</span>
+											</td>
+											<td>
+												<button class="btn waves-effect waves-button waves-float waves-danger" title="Briši plan monitoringa" ng-click="removePlan(subitem, item)">
+													<i class="fa fa-trash"></i>												
+												</button>
+											</td>
+										</tr>								
+									</tbody>
+									</table>								
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-1">
+										<button class="btn waves-effect waves-button waves-float waves-primary" ng-click="addMonitoring($index)">
+											<i class="fa fa-calendar"></i> 
+											<span>Dodaj plan</span>
+										</button>
+									</div>
+								</div>								
+								<div class="divider"></div>
+								<hr>
+							</div>
+							
+							<div class="pull-right">							
+								<button class="btn waves-effect waves-button waves-float waves-warning" ng-click="setStep(2)">Prethodno</button>
+								<button class="btn waves-effect waves-button waves-float waves-info" ng-disabled="checkStep4Requirements()" ng-click="setStep(4)">Sljedeće</button>
+							</div>
+						</div>	
+
+						<!-- 4. tab -->
+						<div ng-switch-when="4">						
+							<h2>Dodatne informacije</h2>
+							<div class="divider"></div>	
+							<div class="form-horizontal">	
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="contactPerson" class="control-label">Kontakt osoba</label>
+									</div>
+									<div class="col-sm-3">
+									  <input type="text" class="form-control" id="contactPerson" placeholder="Kontakt osoba" maxlength="50" ng-model="otherInfo.contactPerson">
+									</div>
+								</div>
+								<div class="divider"></div>		
+
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="contactPhone" class="control-label">Kontakt telefon</label>
+									</div>
+									<div class="col-sm-3">
+									  <input type="text" class="form-control" id="contactPhone" placeholder="Telefon" phonemask maxlength="20" ng-model="otherInfo.contactPhone">
+									</div>
+								</div>
+								<div class="divider"></div>
+
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="contactPhone" class="control-label">E-mail adresa</label>
+									</div>
+									<div class="col-sm-3">
+									  <input type="text" class="form-control" id="contactPhone" placeholder="E-mail" emailmask maxlength="50" ng-model="otherInfo.contactMail">
+									</div>
+								</div>
+								<div class="divider"></div>									
+
+								<div class="row">
+									<div class="col-sm-2">
+										<label for="contactPerson" class="control-label">Bilješke</label>
+									</div>
+									<div class="col-sm-6">
+									  <textarea id="notes" class="form-control" rows="4" maxlength="500" ng-model="otherInfo.notes"></textarea>
+									</div>
+								</div>
+								<div class="divider"></div>
+							</div>
+							<div class="pull-right">
+								<button class="btn waves-effect waves-button waves-float waves-warning" ng-click="setStep(3)">Prethodno</button>
+								<button class="btn waves-effect waves-button waves-float waves-info" ng-click="saveObject()">Spremi</button>
+							</div>
+						</div>
+					</div>
+					
+					
+				<!-- dodavati sekcije ovdje s h1 naslovima -->
+				</div>
+			</form>
+        </div>
+    </section>
+</div>

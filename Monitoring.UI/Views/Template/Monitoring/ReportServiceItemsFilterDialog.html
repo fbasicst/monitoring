@@ -1,0 +1,60 @@
+<h3>Filtriranje odrađenih nadzora</h3>
+<div class="divider"></div>
+<hr>
+<form class="form-horizontal" name="filterForm">
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Godina</label>
+        </div>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="Godina" maxlength="4" integermask ng-model="filter.year">
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Mjesec</label>
+        </div>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="Mjesec" maxlength="4" integermask ng-model="filter.month">
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Područje objekta</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select multiple ng-model="filter.area" theme="bootstrap" close-on-select="true">
+                <ui-select-match placeholder="Područje">{{$item.Name}}</ui-select-match>
+                <ui-select-choices repeat="item in areas | filter: $select.search">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="control-label">Analiza</label>
+        </div>
+        <div class="col-sm-5">
+            <ui-select multiple ng-model="filter.analysis" theme="bootstrap" close-on-select="true">
+                <ui-select-match placeholder="Analiza">{{$item.Name}}</ui-select-match>
+                <ui-select-choices repeat="item in analysisList | filter: $select.search">
+                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <button class="btn waves-effect waves-button waves-float waves-indigo pull-right" ng-click="searchAnnuallyPlans()" ng-disabled="filterForm.$invalid">Filtriraj</button>
+        </div>
+    </div>
+</form>

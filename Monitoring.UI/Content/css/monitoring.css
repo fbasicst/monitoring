@@ -1,0 +1,45 @@
+body {
+	/*overflow:hidden !important;*/
+}
+
+.content-container {
+	overflow-y: auto !important;
+}
+
+.wide-dialog.ngdialog.ngdialog-theme-default .ngdialog-content {
+	background-color: white !important;
+    width: 700px;
+}
+
+.extra-wide-dialog.ngdialog.ngdialog-theme-default .ngdialog-content {
+	background-color: white !important;
+    width: 1000px;
+}
+
+.ui-checkbox {
+	display: block !important;
+}
+
+.color-success {
+	color: green;
+}
+
+.color-danger {
+	color: red;
+}
+
+.table {
+	font-size:13px;
+}
+
+.table tbody tr {	
+	cursor: pointer;
+}
+
+.full-width {
+	width: 100% !important;
+}
+
+.btn {
+	margin-bottom: 0px !important;
+}
