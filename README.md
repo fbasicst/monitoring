@@ -8,8 +8,6 @@ Regulatory Compliance Solution
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Setup](#setup)
-- [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Introduction
@@ -36,22 +34,13 @@ The Compliance Management App is a comprehensive solution designed to assist bus
 
 ## Setup
 
-1. **Backend Setup:**
-   - Describe steps to set up the PHP backend. Include any required dependencies, configurations, and environment variables.
-
-2. **Frontend Setup:**
-   - Explain how to set up the AngularJS frontend. Include information on dependencies, configuration files, and any additional steps required.
-
-3. **Database Setup:**
-   - Provide instructions on setting up the MySQL database. Include details about database schema, initial data setup, and any configurations.
-
-## Usage
-
-Provide instructions on how to run and use your application. Include any relevant details about endpoints, UI navigation, or any other necessary information.
-
-## Contributing
-
-Explain how others can contribute to your project. Include guidelines for submitting issues, feature requests, and pull requests.
+1. Install Apache v2.2.21 with PHP 5.3.8 
+2. MySQL server version 5.5.15
+3. or install altogether using XAMPP 1.7.5 and start services
+4. run DB scripts found in Monitoring.Storage\MySQL initialize scripts
+5. run DB scripts found in Monitoring.Storage\MySQL\InsertScripts insert scripts
+6. navigate to http://localhost/monitoring/Monitoring.UI/Views/Home/#/
+7. login using  test user credentials: tmales_test/tmales987!
 
 ## License
 
